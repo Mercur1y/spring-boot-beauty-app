@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  app:
+    image: 'docker-spring-boot-postgres:latest'
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/beauty-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=L1st3n0
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_PROFILES_ACTIVE=basicauth
+
+  db:
+    image: 'postgres:14.6-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_DB=beauty-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=L1st3n0
